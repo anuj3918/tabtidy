@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TabTidy</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      width: 200px;
+      padding: 16px;
+      margin: 0;
+      background: #fff;
+    }
+    h1 {
+      font-size: 16px;
+      font-weight: 600;
+      margin: 0 0 12px;
+      color: #1a1a1a;
+    }
+    button {
+      width: 100%;
+      padding: 8px 0;
+      background: #2563eb;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    button:hover { background: #1d4ed8; }
+    button:disabled { background: #93c5fd; cursor: default; }
+    #status {
+      margin-top: 10px;
+      font-size: 12px;
+      min-height: 16px;
+      color: #555;
+    }
+    #status.error { color: #dc2626; }
+    #status.success { color: #16a34a; }
+  </style>
+</head>
+<body>
+  <h1>TabTidy</h1>
+  <button id="sortBtn">Sort Tabs</button>
+  <div id="status"></div>
+  <script src="popup.js"></script>
+</body>
+</html>
