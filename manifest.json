@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "TabTidy",
-  "version": "1.1.0",
-  "description": "Click once to sort all tabs alphabetically by domain.",
+  "version": "1.2.0",
+  "description": "Click once to group tabs by site, subdomain and section (e.g. Google Docs vs Sheets).",
   "permissions": ["tabs"],
   "background": {
     "service_worker": "background.js"

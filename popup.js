@@ -1,17 +1,3 @@
-const SPECIAL_SCHEMES = ['chrome:', 'chrome-extension:', 'edge:', 'about:', 'data:'];
-
-function getHostname(url) {
-  try {
-    const { protocol, hostname } = new URL(url);
-    if (SPECIAL_SCHEMES.some(s => protocol.startsWith(s.replace(':', '')))) {
-      return null; // sort to end
-    }
-    return hostname.toLowerCase();
-  } catch {
-    return null;
-  }
-}
-
 function setStatus(msg, type = '') {
   const el = document.getElementById('status');
   el.textContent = msg;
@@ -30,15 +16,8 @@ document.getElementById('sortBtn').addEventListener('click', async () => {
     const pinned = tabs.filter(t => t.pinned);
     const sortable = tabs.filter(t => !t.pinned);
 
-    // Sort: http/https tabs alphabetically by hostname, then special-scheme tabs
-    sortable.sort((a, b) => {
-      const ha = getHostname(a.url);
-      const hb = getHostname(b.url);
-      if (ha === null && hb === null) return 0;
-      if (ha === null) return 1;
-      if (hb === null) return -1;
-      return ha.localeCompare(hb);
-    });
+    // Group by base domain, then subdomain, then first path segment; special-scheme tabs last
+    sortable.sort(compareTabs);
 
     // Move each sortable tab to its new index (after pinned tabs)
     const startIndex = pinned.length;
