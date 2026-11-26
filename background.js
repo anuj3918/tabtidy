@@ -1,28 +1,11 @@
-const SPECIAL_SCHEMES = ['chrome:', 'chrome-extension:', 'edge:', 'about:', 'data:'];
-
-function getHostname(url) {
-  try {
-    const { protocol, hostname } = new URL(url);
-    if (SPECIAL_SCHEMES.some(s => protocol === s)) return null;
-    return hostname.toLowerCase();
-  } catch {
-    return null;
-  }
-}
+importScripts('sortkey.js');
 
 async function sortTabs(windowId) {
   const tabs = await chrome.tabs.query({ windowId });
   const pinned = tabs.filter(t => t.pinned);
   const sortable = tabs.filter(t => !t.pinned);
 
-  sortable.sort((a, b) => {
-    const ha = getHostname(a.url);
-    const hb = getHostname(b.url);
-    if (ha === null && hb === null) return 0;
-    if (ha === null) return 1;
-    if (hb === null) return -1;
-    return ha.localeCompare(hb);
-  });
+  sortable.sort(compareTabs);
 
   const start = pinned.length;
   for (let i = 0; i < sortable.length; i++) {
